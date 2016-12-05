@@ -1,0 +1,26 @@
+version: '2'
+services:
+  server:
+    environment:
+      - POSTGRES_PASSWORD: 'mysecretpassword'
+      - POSTGRES_USER: 'postgres'
+    image: 'app'
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile'
+    ports:
+      - '8080:8080'
+    links:
+      - 'postgres'
+  postgres:
+    image: pg2
+    ports:
+      - "5432:5432"
+
+      web:
+  image: postgres
+  command: sleep 999
+  ports:
+    - "62576:62576"
+  links:
+   - db

@@ -25,7 +25,7 @@ cp ./Dockerfile ./build/
 
 echo Building docker image
 
-docker build -t jongrjon/tictactoe:firstimage .
+docker build -t jongrjon/tictactoe:$GIT_COMMIT .
 
 rc=$?
 if [[ $rc != 0 ]] ; then
@@ -39,5 +39,3 @@ fi
 #    echo "Docker push failed " $rc
 #    exit $rc
 #fi
-
-echo "Done"
