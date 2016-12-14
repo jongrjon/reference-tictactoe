@@ -15,21 +15,18 @@ export GITHUB_URL=$(echo $GIT_URL | rev | cut -c 5- | rev)
 echo Building app
 npm run build
 
-if [ ! -d "$dist" ]; then
-  # Control will enter here if $dist directory doesn't exist.
-  mkdir dist
-fi
-
-cat > ./dist/githash.txt <<_EOF_
+#Insert Git hash into build folder
+cat > ./build/githash.txt <<_EOF_
 $GIT_COMMIT
 _EOF_
 
-if [ ! -d "$dist/public" ]; then
-  # Control will enter here if $dist/public directory doesn't exist.
-  mkdir ./dist/public
+if [ ! -d "$./build/public" ]; then
+  # Control will enter here if $/public doesn't exist and create it
+  mkdir ./build/public
 fi
 
-cat > ./dist/public/version.html << _EOF_
+#Insert update information into version html file
+cat > ./build/public/version.html << _EOF_
 <!doctype html>
 <head>
    <title>App version information</title>
@@ -48,10 +45,8 @@ if [[ $rc != 0 ]] ; then
     exit $rc
 fi
 
-cp ./Dockerfile ./build/
-cd dist
-
-docker build -t jongrjon/tictactoe:$GIT_COMMIT .
+#build docker image
+docker build -t jongrjon/tictactoe .
 
 rc=$?
 if [[ $rc != 0 ]] ; then
@@ -59,7 +54,8 @@ if [[ $rc != 0 ]] ; then
     exit $rc
 fi
 
-docker push jongrjon/tictactoe:$GIT_COMMIT
+#Push docker image online
+docker push jongrjon/tictactoe
 rc=$?
 if [[ $rc != 0 ]] ; then
     echo "Docker push failed " $rc

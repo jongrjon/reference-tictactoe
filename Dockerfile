@@ -1,9 +1,9 @@
 FROM node
 WORKDIR /app
-ENV NODE_PATH=.
-COPY ./build/ .
-COPY package.json .
-COPY ./mdb.sh .
+ENV NODE_PATH=.s
+ADD ./build/ .
+ADD package.json .
+ADD mdb.sh .
 RUN npm install --silent
-EXPOSE 8080
-CMD [./mdb.sh]
+EXPOSE 3000
+CMD ["/app/mdb.sh"]
