@@ -2,7 +2,7 @@
 set -e
 
 sleep 10
-npm run migratedb
+npm run migratedbprod
 node run.js
 
 exit 0

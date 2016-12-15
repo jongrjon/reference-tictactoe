@@ -1,11 +1,12 @@
 version: '2'
 services:
   server:
-    image: jonhelgi/tictactoe
+    image: jongrjon/tictactoe
     environment:
       - PGHOST=postgres
       - PGPORT=5432
       - PORT=3000
+      - NODE_ENV=prod
     ports:
       - 8080:8080
       - 3000:3000
@@ -13,6 +14,8 @@ services:
       - postgres
   postgres:
     environment:
-      - POSTGRES_PASSWORD: 'mysecretpassword'
-      - POSTGRES_USER: 'postgres'
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=postgres
     image: postgres
+    ports:
+      - 5432:5432
