@@ -5,5 +5,5 @@ ADD ./build/ .
 ADD package.json .
 ADD mdb.sh .
 RUN npm install --silent
-EXPOSE 3000
+EXPOSE 80
 CMD ["/app/mdb.sh"]
