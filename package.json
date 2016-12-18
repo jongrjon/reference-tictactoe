@@ -46,6 +46,7 @@
     "loadtest": "export NODE_PATH=. && ./node_modules/.bin/jest --config apitest/loadtest-jest.json",
     "dev": "./node_modules/.bin/parallelshell 'npm run start' 'npm run startclient'",
     "migratedbprod": "db-migrate --config ./server/database.json -e prod --migrations-dir ./server/migrations up",
-    "migratedb": "db-migrate --config ./server/database.json --migrations-dir ./server/migrations up"
+    "migratedb": "db-migrate --config ./server/database.json --migrations-dir ./server/migrations up",
+    "citest": "CI=true && export NODE_PATH=./src/ && react-scripts test --env=jsdom"
   }
 }
