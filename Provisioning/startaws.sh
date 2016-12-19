@@ -18,6 +18,7 @@ PublicIP=$(aws ec2 describe-instances --instance-ids "$InstanceID" --query 'Rese
 ConnectURL=$(echo "$PublicIP"|tr '\.' '\-')
 INSTANCE_PUBLIC_NAME=ec2-"$ConnectURL".us-west-2.compute.amazonaws.com
 
+#checking if AWS is ready to be connected to
 status='unknown'
 while [ ! "${status}" == "ok" ]
 do
@@ -25,9 +26,10 @@ do
    status=$(ssh -i "prodenvkey.pem"  -o StrictHostKeyChecking=no -o BatchMode=yes -o ConnectTimeout=5 ec2-user@${INSTANCE_PUBLIC_NAME} echo ok 2>&1)
    sleep 2
 done
-
+#Copying docker-compose file to AWS machine
 scp -o StrictHostKeyChecking=no -i "prodenvkey.pem" ../docker-compose.yaml ec2-user@${INSTANCE_PUBLIC_NAME}:~/docker-compose.yaml
 
+#Running local scripts on the AWS machine
 ssh -o StrictHostKeyChecking=no -i "prodenvkey.pem" ec2-user@${INSTANCE_PUBLIC_NAME} 'bash -s' < setup.sh
 ssh -o StrictHostKeyChecking=no -i "prodenvkey.pem" ec2-user@${INSTANCE_PUBLIC_NAME} 'bash -s' < startup.sh
 
